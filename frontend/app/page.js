@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-<<<<<<< HEAD
 
 export default function Home() {
 
@@ -53,28 +52,12 @@ export default function Home() {
     readStream();
   };
   
-=======
-import {useChat} from "ai/react";
-
-export default function Home() {
-  
-  const [input, setInput] = useState("");
-  const [loading,setLoading] = useState(false)
-
-  const { messages, inputs, handleInputChange, handleSubmit } = useChat({
-    api: "http://127.0.0.1:8000/api/chat"
-  });
->>>>>>> d73d206e4b4782fb6e92bd20bc2d719d881908cd
 
 
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-gray-800 text-white text-center py-8">
-<<<<<<< HEAD
         <h1 className="text-4xl font-bold">FUNNY DEMO</h1>
-=======
-        <h1 className="text-4xl font-bold">VERON DEEPCHIP</h1>
->>>>>>> d73d206e4b4782fb6e92bd20bc2d719d881908cd
         {/* <p className="text-lg mt-2">People detection</p> */}
       </header>
 
@@ -86,11 +69,7 @@ export default function Home() {
     <div className="px-5 py-5 flex justify-between items-center bg-white border-b-2">
       <div className="font-semibold text-2xl">GoingChat</div>
       <div className="w-1/2">
-<<<<<<< HEAD
         <p>Hello User, Welcome to Chatbox</p>
-=======
-        <p>Hello User, Welcome to Veron Chatbox</p>
->>>>>>> d73d206e4b4782fb6e92bd20bc2d719d881908cd
       </div>
       <div
         className="h-12 w-12 p-2 bg-yellow-500 rounded-full text-white font-semibold flex items-center justify-center"
@@ -197,7 +176,6 @@ export default function Home() {
       
       <div className="w-full px-5 flex flex-col justify-between">
         <div className="flex flex-col mt-5">
-<<<<<<< HEAD
         
 
 
@@ -232,10 +210,6 @@ export default function Home() {
       {/* </div> */}
 
           {/* <div className="flex justify-start mb-4">
-=======
-          
-          <div className="flex justify-start mb-4">
->>>>>>> d73d206e4b4782fb6e92bd20bc2d719d881908cd
             <img
               src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
               className="object-cover h-8 w-8 rounded-full"
@@ -249,78 +223,20 @@ export default function Home() {
               nulla doloribus laborum illo rem enim dolor odio saepe,
               consequatur quas?
             </div>
-<<<<<<< HEAD
           </div> */}
           
          
-=======
-          </div>
-          <div className="flex justify-end mb-4">
-            <div
-              className="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"
-            >
-              Welcome to group everyone !
-            </div>
-            <img
-              src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-              className="object-cover h-8 w-8 rounded-full"
-              alt=""
-            />
-          </div>
-          <div className="flex justify-end mb-4">
-            <div>
-              <div
-                className="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"
-              >
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Magnam, repudiandae.
-              </div>
-
-              <div
-                className="mt-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Debitis, reiciendis!
-              </div>
-            </div>
-            <img
-              src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-              className="object-cover h-8 w-8 rounded-full"
-              alt=""
-            />
-          </div>
-          <div className="flex justify-start mb-4">
-            <img
-              src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-              className="object-cover h-8 w-8 rounded-full"
-              alt=""
-            />
-            <div
-              className="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white"
-            >
-              happy holiday guys!
-            </div>
-          </div>
->>>>>>> d73d206e4b4782fb6e92bd20bc2d719d881908cd
         </div>
         <div className="py-5 flex items-center gap-3">
   <input
     className="w-full bg-gray-300 py-3 px-3 rounded-xl"
     type="text"
     placeholder="Type your message here..."
-<<<<<<< HEAD
     onChange={(event)=>{setInput(event.target.value)}}
     value = {input}
   />
   <button className="bg-blue-500 text-white px-5 py-3 rounded-xl"
   onClick={()=>{sendMessage()}}
-=======
-    onChange={handleInputChange}
-    value = {input}
-  />
-  <button className="bg-blue-500 text-white px-5 py-3 rounded-xl"
-  onClick={handleSubmit}
->>>>>>> d73d206e4b4782fb6e92bd20bc2d719d881908cd
   >
     Enter
   </button>

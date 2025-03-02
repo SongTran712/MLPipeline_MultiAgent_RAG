@@ -10,10 +10,7 @@
   },
   "dependencies": {
     "@nanostores/react": "github:ai/react",
-<<<<<<< HEAD
     "ai": "^4.1.46",
-=======
->>>>>>> d73d206e4b4782fb6e92bd20bc2d719d881908cd
     "frontend": "file:",
     "next": "15.1.7",
     "react": "^19.0.0",
