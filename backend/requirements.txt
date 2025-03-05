@@ -5,3 +5,6 @@ pydantic
 langchain
 langchain_ollama
 gradio
+aiokafka
+kafka-python
+agno

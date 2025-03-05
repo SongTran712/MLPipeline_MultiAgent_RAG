@@ -1,0 +1,5 @@
+aiokafka
+# langchain
+# langchain_ollama
+agno
+ollama

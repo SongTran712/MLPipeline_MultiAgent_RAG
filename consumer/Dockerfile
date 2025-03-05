@@ -10,10 +10,5 @@ RUN apt-get update && apt-get install -y  libsm6 libxext6 libfontconfig1 libxren
 RUN pip install --upgrade pip
 RUN pip install  -r requirements.txt
 # RUN pip uninstall -y opencv-python-headless opencv-python
-# RUN pip install opencv-python
-
-# # Expose the port the app runs on (optional, adjust if needed)
-# EXPOSE 8000
-
-# # Command to run the app
-# CMD ["python3", "app.py"]
+CMD ["python", "consumer.py"]
+EXPOSE 7127

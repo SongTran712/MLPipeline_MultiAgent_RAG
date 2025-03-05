@@ -9,47 +9,63 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
-
+    if (!input.trim()) return; // If input is empty, do nothing.
+  
     const userMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]); // Add user message
-    setInput("");
-    setLoading(true);
-
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: input }),
-    });
-
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder("utf-8");
-
-    let botMessage = { role: "assistant", content: "" }; // AI message starts empty
-    setMessages((prev) => [...prev, botMessage]); // Add empty AI message to array
-
-    const readStream = async () => {
-      const { value, done } = await reader.read();
-      if (done) {
-        setLoading(false);
-        return;
-      }
-
-      let token = decoder.decode(value);
-
-      setMessages((prev) => {
-        let updatedMessages = [...prev];
-        updatedMessages[updatedMessages.length - 1] = {
-          role: "assistant",
-          content: updatedMessages[updatedMessages.length - 1].content + token, // Append token
-        };
-        return updatedMessages;
+    setMessages((prev) => [...prev, userMessage]); // Add user message to chat
+    setInput(""); // Clear the input
+    setLoading(true); // Start loading indicator
+  
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: input }),
       });
-
-      readStream(); // Continue reading the stream
-    };
-
-    readStream();
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch response from the server');
+      }
+  
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+  
+      let botMessage = { role: "assistant", content: "" }; // Initial empty AI message
+      setMessages((prev) => [...prev, botMessage]); // Add empty message to array
+  
+      const readStream = async () => {
+        const { value, done } = await reader.read();
+        if (done) {
+          setLoading(false); // Stop loading once the stream is finished
+          return;
+        }
+  
+        let token = decoder.decode(value, { stream: true }); // Decode the chunk of data
+  
+        setMessages((prev) => {
+          let updatedMessages = [...prev];
+          updatedMessages[updatedMessages.length - 1] = {
+            role: "assistant",
+            content: updatedMessages[updatedMessages.length - 1].content + token, // Append token
+          };
+          return updatedMessages;
+        });
+  
+        // Recursively call readStream to continue reading
+        if (!done) {
+          readStream();
+        }
+      };
+  
+      // Start reading the stream
+      readStream();
+  
+    } catch (error) {
+      console.error("Error occurred while sending the message:", error);
+      setLoading(false); // Ensure loading stops if there is an error
+      // Optionally show an error message to the user
+      setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, something went wrong!" }]);
+    }
   };
   
 

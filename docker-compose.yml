@@ -1,4 +1,41 @@
+version: "3"
+
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:6.2.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9101:9101"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_HOST_NAME: kafka:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      # KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      # KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+      # KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+      # KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      # KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      # KAFKA_LOG_RETENTION_HOURS: "168"  # Retain messages for 7 days (in hours)
+      # KAFKA_LOG_RETENTION_BYTES: "1073741824"  # Retain 1GB of data
+      # KAFKA_LOG_SEGMENT_BYTES: "536870912"  # Limit segment size to 512MB
+      # KAFKA_LOG_CLEANER_ENABLE: "true"
+
   frontend:
     build:
       context: ./frontend
@@ -7,7 +44,7 @@ services:
     depends_on:
       - backend
     restart: always
-
+    
   backend:
     build:
       context: ./backend
@@ -19,6 +56,20 @@ services:
     volumes:
       - ./backend:/app
     command: uvicorn main:app --host 0.0.0.0 --port 8000  --workers 10
+
+  consumer:
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    container_name: consumer
+    restart: always
+    depends_on:
+      - ollama
+      - backend
+      - kafka
+    volumes:
+      - ./consumer:/app
+
   nginx:
     image: nginx:alpine
     container_name: nginx
@@ -30,6 +81,7 @@ services:
     depends_on:
       - frontend
       - backend
+    restart: always
   ollama:
     build: 
       context: ./ollama
@@ -48,3 +100,5 @@ services:
 
 volumes:
   ollama_data:  # Ensure this volume is declared properly
+  # zookeeper_data:
+  # kafka_data:
