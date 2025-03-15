@@ -10,14 +10,13 @@ export default function Home() {
 
   const sendMessage = async () => {
     if (!input.trim()) return; // If input is empty, do nothing.
-  
     const userMessage = { role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]); // Add user message to chat
     setInput(""); // Clear the input
     setLoading(true); // Start loading indicator
   
     try {
-      const response = await fetch("/api/chat", {
+      const response = await fetch("http://localhost:8000/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: input }),

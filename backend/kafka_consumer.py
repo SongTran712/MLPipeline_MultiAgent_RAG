@@ -7,7 +7,7 @@ async def consume_tokens_from_kafka(id):
     # Initialize the consumer
     consumer = AIOKafkaConsumer(
         'response',  # Kafka topic to consume from
-        bootstrap_servers='kafka:29092',
+        bootstrap_servers='localhost:9092',
         value_deserializer=lambda x: json.loads(x.decode('utf-8')),
         enable_auto_commit=False,  # Disable auto commit to commit offsets manually
         max_poll_records=100,  # Limit the number of records per poll

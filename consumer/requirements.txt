@@ -3,3 +3,7 @@ aiokafka
 # langchain_ollama
 agno
 ollama
+elasticsearch
+sentence_transformers
+markdown
+bs4

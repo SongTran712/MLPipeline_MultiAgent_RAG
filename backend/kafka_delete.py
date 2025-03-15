@@ -1,7 +1,7 @@
 from kafka.admin import KafkaAdminClient
 from kafka.errors import KafkaError
 
-def delete_all_kafka_topics(bootstrap_servers: str = 'kafka:29092'):
+def delete_all_kafka_topics(bootstrap_servers: str = 'localhost:9092'):
     try:
         # Create an instance of KafkaAdminClient
         admin_client = KafkaAdminClient(bootstrap_servers=bootstrap_servers)
